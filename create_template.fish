@@ -5,4 +5,4 @@ mkdir $path
 
 touch $path/sample.txt
 touch $path/input.txt
-touch $path/default.nix
+cp template.nix $path/default.nix
