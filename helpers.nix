@@ -1,5 +1,6 @@
 with (import <nixpkgs>{}).lib.strings;
 with (import <nixpkgs>{}).lib.lists;
+with (import <nixpkgs>{}).lib;
 with builtins;
 rec {
   # vector operations
@@ -15,12 +16,20 @@ rec {
   # string processing
   explode = s: init (tail (splitString "" s));
   lines = s: init (splitString "\n" s);
+  spaces = s: splitString " " s;
   stringGrid = s: (map (x: filter (y: y != "") (explode x)) (lines s));
   spacedInts = s: map toInt (splitString " " s);
 
   # lists
   sum = l: foldl (acc: e: acc+e) 0 l;
   pairs = l: init (imap0 (i: v: take 2 (drop i l)) l);
+  combos = eList: size:
+    if size == 0
+    then []
+    else if size == 1
+    then map singleton eList
+    else mapCartesianProduct ({x,y}: [x] ++ y) {x= eList; y=combos eList (size - 1);}
+  ;
 
   # numbers
   abs = x: if (x < 0) then -x else x;
