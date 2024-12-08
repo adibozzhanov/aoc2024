@@ -4,6 +4,7 @@ with (import <nixpkgs>{}).lib;
 with builtins;
 rec {
   # vector operations
+  vecSet = l: foldl (acc: v: acc // {${vecStr v} = 1;}) {} l;
   vecStr = v: "${toString v.x},${toString v.y}";
   sameDirection = a: b: (dotVec a b) > 0;
   magSquared = a: dotVec a a;
