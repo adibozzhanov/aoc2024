@@ -14,7 +14,7 @@ let
   opsMap = { "*" = mul; "+" = add; "||" = intCat; };
   intCat = (x: y: toInt((toString x) + (toString y)));
   getOp = ops: ind: getAttr (elemAt ops ind) opsMap;
-  eval = nums: ops: (foldl' (acc: x: {cur = (getOp ops acc.ind) acc.cur x; ind = acc.ind+1;}) ({cur = head nums; ind = 0;}) (tail nums)).cur;
+  eval = nums: ops: (foldl (acc: x: {cur = (getOp ops acc.ind) acc.cur x; ind = acc.ind+1;}) ({cur = head nums; ind = 0;}) (tail nums)).cur;
   solve = opSet: tgt: nums: any (c: (eval nums c) == tgt) (combos opSet ((length nums) - 1));
 in
 {
