@@ -21,7 +21,6 @@ let
     then acc // ({${key} = acc.${key} ++ new.${key};})
     else acc // new
   ) {} processed;
-
   dimensions = {xlen = length (elemAt input 0); ylen = length input;};
   inBounds = v: (v.x >= 0) && (v.y >= 0) && (v.x < dimensions.xlen) && (v.y < dimensions.ylen);
   pairCombos = l: (filter (x: (head x) != (last x)) (combos l 2));

@@ -29,8 +29,7 @@ rec {
     then []
     else if size == 1
     then map singleton eList
-    else mapCartesianProduct ({x,y}: [x] ++ y) {x= eList; y=combos eList (size - 1);}
-  ;
+    else mapCartesianProduct ({x,y}: [x] ++ y) {x=eList; y=combos eList (size - 1);};
 
   # numbers
   abs = x: if (x < 0) then -x else x;
