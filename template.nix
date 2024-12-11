@@ -5,9 +5,9 @@ with (import <nixpkgs> { }).lib.strings;
 with (import <nixpkgs> { }).lib.debug;
 with (import <nixpkgs> { }).lib.trivial;
 let
-  input = readFile ./sample.txt;
+  f = ./sample.txt;
+  input = readFile f;
 in
 {
   res1 = input;
-  res2 = input;
 }
