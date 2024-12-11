@@ -3,6 +3,13 @@ with (import <nixpkgs>{}).lib.lists;
 with (import <nixpkgs>{}).lib;
 with builtins;
 rec {
+  # grids
+  elemAtVec = g: v: elemAt (elemAt g v.y) v.x;
+  dimensions = g: {xlen = length (elemAt g 0); ylen = length g;};
+  withinGridBounds = d: v: (v.x >= 0 && v.y >= 0 && v.x < d.xlen && v.y < d.ylen);
+  neighVH = [{x = 0; y = -1;} {x = 1; y = 0;} {x = 0; y = 1;} {x = -1; y = 0;}];
+  neighVHD = neighVH ++ [{x = -1; y = -1;} {x = 1; y = -1;} {x = 1; y = 1;} {x = -1; y = 1;}];
+
   # vector operations
   vecSet = l: foldl (acc: v: acc // {${vecStr v} = 1;}) {} l;
   vecStr = v: "${toString v.x},${toString v.y}";
