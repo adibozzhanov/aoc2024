@@ -10,7 +10,6 @@ rec {
   neighVH = [{x = 0; y = -1;} {x = 1; y = 0;} {x = 0; y = 1;} {x = -1; y = 0;}];
   neighVHD = neighVH ++ [{x = -1; y = -1;} {x = 1; y = -1;} {x = 1; y = 1;} {x = -1; y = 1;}];
 
-
   # vector operations
   vecSet = l: foldl (acc: v: acc // {${vecStr v} = 1;}) {} l;
   vecStr = v: "${toString v.x},${toString v.y}";
