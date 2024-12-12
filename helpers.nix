@@ -10,6 +10,7 @@ rec {
   neighVH = [{x = 0; y = -1;} {x = 1; y = 0;} {x = 0; y = 1;} {x = -1; y = 0;}];
   neighVHD = neighVH ++ [{x = -1; y = -1;} {x = 1; y = -1;} {x = 1; y = 1;} {x = -1; y = 1;}];
 
+
   # vector operations
   vecSet = l: foldl (acc: v: acc // {${vecStr v} = 1;}) {} l;
   vecStr = v: "${toString v.x},${toString v.y}";
@@ -37,6 +38,19 @@ rec {
     else if size == 1
     then map singleton eList
     else mapCartesianProduct ({x,y}: [x] ++ y) {x=eList; y=combos eList (size - 1);};
+
+  memo = cache: f: args:
+    let
+      key = toString args;
+    in
+    if hasAttr key cache
+    then getAttr key cache
+    else
+      let
+        val = f args;
+        c = cache // {${key} = val;};
+      in
+        memo c f args;
 
   # numbers
   abs = x: if (x < 0) then -x else x;
