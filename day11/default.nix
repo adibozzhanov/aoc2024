@@ -9,6 +9,7 @@ let
   f = ./input.txt;
 
   input = spacedInts (head (lines (readFile f)));
+
   splitInHalves = n:
     let
       s = toString n;
@@ -25,17 +26,13 @@ let
     then splitInHalves n
     else [(n * 2024)];
 
-  rulesCache = initNumericCache rules;
-  cRules = getFromCache rulesCache;
-
-  fun = d: n:
+  fun = memo (d: n:
     if d == 0
     then 1
-    else sum (map (cached (d - 1)) (cRules n));
+    else sum (map (fun (d - 1)) (rules n)));
 
-  cached = (wrapInCache fun).wrapped;
 in
 {
-  res1 = sum (map (cached 25) input);
-  res2 = sum (map (cached 75) input);
+  res1 =  sum (map (fun 25) input);
+  res2 =  sum (map (fun 75) input);
 }
